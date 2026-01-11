@@ -1,16 +1,16 @@
 
 ---
 
-### 📄 `update.md`
+### 📄 `delete.md`
 
 ```md
-# Update Book Record
+# Delete Book Record
 
 ## Django Shell Command
 
 ```python
 from bookshelf.models import Book
-book = Book.objects.get(title="1984")
-book.title = "Nineteen Eighty-Four"
-book.save()
-book
+book = Book.objects.get(title="Nineteen Eighty-Four")
+book.delete()
+Book.objects.all()
+
