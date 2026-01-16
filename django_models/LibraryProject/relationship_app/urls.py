@@ -28,3 +28,19 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('relationship_app.urls')),  # Include relationship_app URLs
 ]
+
+from django.urls import path
+from .views import book_list, LibraryDetailView
+
+urlpatterns = [
+    path("books/", book_list, name="book-list"),
+    path("libraries/<int:pk>/", LibraryDetailView.as_view(), name="library-detail"),
+]
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("relationship_app.urls")),
+]
