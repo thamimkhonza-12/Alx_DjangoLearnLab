@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-from django.contrib import admin
-from django.urls import path, include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,4 +44,19 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("relationship_app.urls")),
+]
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('books/', views.book_list_view, name='book-list'),
+]
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('books/', views.book_list_view, name='book-list'),
+    path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library-detail'),
 ]
