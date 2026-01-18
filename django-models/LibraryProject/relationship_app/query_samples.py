@@ -6,7 +6,12 @@ from relationship_app.models import Author, Book, Library, Librarian
 books_by_author = Book.objects.filter(author__name="Author Name")
 
 # 2. List all books in a library
-books_in_library = Library.objects.get(name="Library Name").books.all()
+def books_in_library(library_name):
+    library = Library.objects.get(name=library_name)
+    books = library.books.all()
+    for book in books:
+        print(book.title)
+
 
 # 3. Retrieve the librarian for a library
 librarian_of_library = Library.objects.get(name="Library Name").librarian
