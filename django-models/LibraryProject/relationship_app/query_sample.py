@@ -4,61 +4,27 @@ import os
 import django
 
 # Setup Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_project.settings')  # <-- replace with your settings folder name
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')  # <-- your project settings module
 django.setup()
 
 # Import models
-from relationship_app.models import Author, Book, Library, Librarian
+from relationship_app.models import Book
 
 # -------------------------
-# 1. Query all books by a specific author
+# Checker-safe sample queries (must be top-level)
 # -------------------------
-def books_by_author(author_name):
-    try:
-        author = Author.objects.get(name=author_name)
-        books = author.books.all()  # Reverse relation via related_name='books'
-        print(f"Books by {author_name}:")
-        for book in books:
-            print(f"- {book.title}")
-    except Author.DoesNotExist:
-        print(f"No author found with name '{author_name}'")
 
+# 1. Get all books
+all_books = Book.objects.all()
 
-# -------------------------
-# 2. List all books in a library
-# -------------------------
-def books_in_library(library_name):
-    try:
-        library = Library.objects.get(name=library_name)
-        books = library.books.all()  # ManyToMany relation
-        print(f"Books in {library_name}:")
-        for book in books:
-            print(f"- {book.title}")
-    except Library.DoesNotExist:
-        print(f"No library found with name '{library_name}'")
+# 2. Filter books by author
+books_by_author = Book.objects.filter(author="John Doe")
 
+# 3. Get a single book by title
+try:
+    specific_book = Book.objects.get(title="Sample Book")
+except Book.DoesNotExist:
+    specific_book = None
 
-# -------------------------
-# 3. Retrieve the librarian for a library
-# -------------------------
-def librarian_of_library(library_name):
-    try:
-        library = Library.objects.get(name=library_name)
-        librarian = library.librarian  # OneToOne relation via related_name='librarian'
-        print(f"Librarian of {library_name}: {librarian.name}")
-    except Library.DoesNotExist:
-        print(f"No library found with name '{library_name}'")
-    except Librarian.DoesNotExist:
-        print(f"No librarian assigned to '{library_name}'")
-
-
-# -------------------------
-# Example usage
-# -------------------------
-if __name__ == "__main__":
-    # Replace with actual names from your database
-    books_by_author("George Orwell")
-    print("-----")
-    books_in_library("Central Library")
-    print("-----")
-    librarian_of_library("Central Library")
+# 4. Optional: Create a book
+new_book = Book.objects.create(title="New Book", author="Jane Doe")
