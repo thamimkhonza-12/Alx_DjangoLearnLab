@@ -18,6 +18,7 @@ def book_list(request):
     output = [f"{book.title} by {book.author.name}" for book in books]
     return HttpResponse("<br>".join(output))
 
+from django.views.generic.detail import DetailView
 # -------------------------
 # Class-based view
 # -------------------------
