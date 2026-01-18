@@ -171,3 +171,11 @@ def list_books(request):
 @user_passes_test(lambda u: u.is_staff)
 def admin_view(request):
     return HttpResponse("Admin dashboard")
+
+from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponse
+
+@user_passes_test(lambda u: u.is_staff)
+def admin_view(request):
+    return HttpResponse("Admin dashboard")
+
