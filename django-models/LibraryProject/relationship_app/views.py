@@ -1,6 +1,11 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
 
+@user_passes_test(lambda u: u.is_staff)
+def admin_view(request):
+    return HttpResponse("Admin dashboard")
+
+
 django.http import HttpResponse
 from django.views.generic import DetailView
 from .models import Book, Library
