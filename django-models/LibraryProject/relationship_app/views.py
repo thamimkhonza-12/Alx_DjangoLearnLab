@@ -1,4 +1,5 @@
 # Imports (only once at top)
+from .models import Library
 from django.http import HttpResponse
 from django.views.generic import DetailView
 from django.shortcuts import render, redirect, get_object_or_404
