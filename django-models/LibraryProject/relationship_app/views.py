@@ -150,5 +150,11 @@ def delete_book(request, book_id):
     return render(request, 'relationship_app/delete_book.html', {'book': book})
 
 
+from .models import Book
+from django.shortcuts import render
+
+def list_books(request):
+    books = Book.objects.all()
+    return render(request, "relationship_app/list_books.html", {"books": books})
 
 
