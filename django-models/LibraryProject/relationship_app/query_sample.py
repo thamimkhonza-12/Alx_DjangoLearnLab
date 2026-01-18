@@ -1,30 +1,12 @@
 # relationship_app/query_samples.py
 
-import os
-import django
+from relationship_app.models import Author, Book, Library, Librarian
 
-# Setup Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')  # <-- your project settings module
-django.setup()
+# 1. Query all books by a specific author
+books_by_author = Book.objects.filter(author__name="Author Name")
 
-# Import models
-from relationship_app.models import Book
+# 2. List all books in a library
+books_in_library = Library.objects.get(name="Library Name").books.all()
 
-# -------------------------
-# Checker-safe sample queries (must be top-level)
-# -------------------------
-
-# 1. Get all books
-all_books = Book.objects.all()
-
-# 2. Filter books by author
-books_by_author = Book.objects.filter(author="John Doe")
-
-# 3. Get a single book by title
-try:
-    specific_book = Book.objects.get(title="Sample Book")
-except Book.DoesNotExist:
-    specific_book = None
-
-# 4. Optional: Create a book
-new_book = Book.objects.create(title="New Book", author="Jane Doe")
+# 3. Retrieve the librarian for a library
+librarian_of_library = Library.objects.get(name="Library Name").librarian
