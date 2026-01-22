@@ -50,6 +50,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 
+SECURE_SSL_REDIRECT = True
+
 
 # ===============================
 # Security Settings
