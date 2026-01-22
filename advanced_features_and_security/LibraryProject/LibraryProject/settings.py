@@ -97,3 +97,5 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'LibraryProject.urls'
 
 WSGI_APPLICATION = 'LibraryProject.wsgi.application'
+
+
