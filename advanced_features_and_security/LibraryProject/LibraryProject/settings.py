@@ -101,15 +101,6 @@ ROOT_URLCONF = 'LibraryProject.urls'
 WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 
 # ===============================
-# HSTS Configuration
-# ===============================
-
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-
-
-# ===============================
 # Security Settings
 # ===============================
 
@@ -130,4 +121,8 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+# ===============================
+# Proxy SSL Header (for HTTPS behind proxy)
+# ===============================
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
