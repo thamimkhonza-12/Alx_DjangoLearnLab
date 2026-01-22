@@ -42,6 +42,8 @@ from django.shortcuts import render
 from .models import Book
 from django.db.models import Q
 from django import forms
+from .forms import ExampleForm
+
 
 # Secure form for user input
 class BookSearchForm(forms.Form):
