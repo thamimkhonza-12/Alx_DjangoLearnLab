@@ -125,14 +125,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-# Use token authentication for API requests
-'DEFAULT_AUTHENTICATION_CLASSES': [
-'rest_framework.authentication.TokenAuthentication',
-],
+    # Token authentication for API requests
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 
-
-# Default permission (can be overridden per view)
-'DEFAULT_PERMISSION_CLASSES': [
-'rest_framework.permissions.AllowAny',
-],
+    # Require authentication by default
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
