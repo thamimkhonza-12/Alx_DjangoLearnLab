@@ -13,9 +13,14 @@ class BookListCreateView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+
+    search_fields = ['title', 'author']
     ordering_fields = ['title', 'author', 'publication_year']
-    ordering = ['title']  # default ordering
+    ordering = ['title']
 
 
     # 👇 PERMISSIONS GO HERE
