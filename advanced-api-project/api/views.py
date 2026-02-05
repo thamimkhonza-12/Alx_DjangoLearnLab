@@ -9,10 +9,14 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 
-
-class BookListView(generics.ListAPIView):
+class BookListCreateView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['title', 'author', 'publication_year']
+    ordering = ['title']  # default ordering
+
 
     # 👇 PERMISSIONS GO HERE
     permission_classes = [permissions.AllowAny]
