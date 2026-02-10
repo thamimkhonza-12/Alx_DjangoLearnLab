@@ -48,3 +48,16 @@ class CommentForm(forms.ModelForm):
         if len(content.strip()) < 3:
             raise forms.ValidationError("Comment is too short.")
         return content
+
+from django import forms
+from .models import Post
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'tags']
+        widgets = {
+            'tags': forms.TextInput(
+                attrs={'placeholder': 'Add tags separated by commas'}
+            )
+        }
