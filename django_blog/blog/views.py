@@ -159,3 +159,20 @@ def posts_by_tag(request, tag_name):
         'posts': posts
     })
 
+from django.views.generic import ListView
+from .models import Post
+from taggit.models import Tag
+
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/posts_by_tag.html'  # create this template
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+        return Post.objects.filter(tags__slug=tag_slug).order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.kwargs.get('tag_slug')
+        return context

@@ -10,3 +10,17 @@
 {% empty %}
     <p>No posts found for this tag.</p>
 {% endfor %}
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Posts tagged with "{{ tag }}"</h1>
+
+{% for post in posts %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content|truncatewords:30 }}</p>
+    <a href="{% url 'post_detail' post.pk %}">Read more</a>
+{% empty %}
+    <p>No posts found for this tag.</p>
+{% endfor %}
+{% endblock %}
