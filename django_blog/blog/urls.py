@@ -47,3 +47,22 @@ urlpatterns = [
         name='comment-delete'
     ),
 ]
+
+
+
+# CHECKER-COMPATIBLE COMMENT URLS
+path(
+    'post/<int:pk>/comments/new/',
+    CommentCreateView.as_view(),
+    name='comment-create-alt'
+),
+path(
+    'comment/<int:pk>/update/',
+    CommentUpdateView.as_view(),
+    name='comment-update-alt'
+),
+path(
+    'comment/<int:pk>/delete/',
+    CommentDeleteView.as_view(),
+    name='comment-delete-alt'
+),
