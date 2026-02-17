@@ -49,7 +49,7 @@ class FeedView(generics.ListAPIView):
         following_users = self.request.user.following.all()
 
         # Include current user posts too (optional but recommended)
-        following_users = list(following_users) + [self.request.user]
+        return Post.objects.filter(author__in=following_users).order_by('-created_at')
 
         # Return posts ordered by newest first
         return Post.objects.filter(
