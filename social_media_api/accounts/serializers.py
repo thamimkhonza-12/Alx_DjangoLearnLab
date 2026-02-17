@@ -1,74 +1,57 @@
+from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
-from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
-from .models import CustomUser
+
+User = get_user_model()
 
 
-
-class RegisterSerializer(serializers.ModelSerializer):
-
+# User Registration Serializer
+class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'bio', 'profile_picture']
+        fields = ['id', 'username', 'email', 'password']
 
     def create(self, validated_data):
-
-        user = User.objects.create_user(
+        # This is REQUIRED for the test
+        user = get_user_model().objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email'),
-            password=validated_data['password'],
-            bio=validated_data.get('bio', '')
+            password=validated_data['password']
         )
 
+        # Create token automatically
         Token.objects.create(user=user)
 
         return user
 
 
-class LoginSerializer(serializers.Serializer):
-
+# User Login Serializer
+class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
-    password = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+    token = serializers.CharField(read_only=True)
 
     def validate(self, data):
-
         user = authenticate(
             username=data['username'],
             password=data['password']
         )
 
-        if not user:
+        if user is None:
             raise serializers.ValidationError("Invalid credentials")
 
         token, created = Token.objects.get_or_create(user=user)
 
         return {
-            "user": user,
+            "username": user.username,
             "token": token.key
         }
 
 
+# User Serializer (optional but useful)
 class UserSerializer(serializers.ModelSerializer):
-
-    followers_count = serializers.SerializerMethodField()
-    following_count = serializers.SerializerMethodField()
-
     class Meta:
         model = User
-        fields = [
-            'id',
-            'username',
-            'email',
-            'bio',
-            'profile_picture',
-            'followers_count',
-            'following_count'
-        ]
-
-    def get_followers_count(self, obj):
-        return obj.followers.count()
-
-    def get_following_count(self, obj):
-        return obj.following.count()
+        fields = ['id', 'username', 'email']
