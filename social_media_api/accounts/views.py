@@ -1,7 +1,22 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from .models import CustomUser
+from .serializers import Us
+from rest_framework import generics, permissions
+from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
+
+User = get_user_model()
+
+
+class RegisterView(generics.CreateAPIView):
+    """
+    View for user registration
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
+
 
 
 # FOLLOW USER VIEW
